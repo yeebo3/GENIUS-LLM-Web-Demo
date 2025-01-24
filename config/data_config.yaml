@@ -1,0 +1,73 @@
+model:
+  url: https://api.deepseek.com
+  api_key: <your_api_key>
+  model: deepseek-chat
+
+mongodb:
+  uri: "mongodb://localhost:27017/"
+  database: "cotton_gene_database"
+
+# for 01process_data.py ,文本化处理数据
+#定义了每种数据类型的输入文件和输出文件路径，用于数据处理操作
+data_paths:
+  blast:
+    input: "src/data/yourdata_process/01gene_blast.txt"
+    output: "src/data/yourdata_process_output/blast_results_text.txt"
+  coexpression:
+    input: "src/data/yourdata_process/02cultivar"
+    output: "src/data/yourdata_process_output/coexpression_output.txt"
+  expression:
+    input: "src/data/yourdata_process/03all_Tissue_mean_TPM.csv"
+    output: "src/data/yourdata_process_output/expression_output.txt"
+  homolog:
+    input: "src/data/yourdata_process/04multi_gene_data.xlsx"
+    output: "src/data/yourdata_process_output/homolog_output.txt"
+  twas:
+    input: "src/data/yourdata_process/05TWAS_out_240925.xlsx"
+    output: "src/data/yourdata_process_output/twas_output.txt"
+  kegg:
+    input: "src/data/yourdata_process/06KEGG.csv"
+    output: "src/data/yourdata_process_output/KEGG_descriptions.txt"
+  go:
+    input: "src/data/yourdata_process/07GO.csv"
+    output: "src/data/yourdata_process_output/GO_descriptions.txt"
+
+# for 02import_data.py，将文本化数据导入到 MongoDB 数据库
+  # 定义了需要导入到 MongoDB 数据库的各种数据源及目标集合
+  # 目前只支持txt和CSV文件
+data_imports:
+  blast:
+    input_path: "src/data/yourdata_process_output/blast_results_text.txt"  # 从文件 src/data/test_import/01gene_blast_cleaned.txt 中读取基因比对数据，导入到 MongoDB 集合
+    collection: "gene_blast_similarity"
+  coexpression:
+    input_path: "src/data/yourdata_process_output/coexpression_output.txt"
+    collection: "gene_coexpression"
+  expression:
+    input_path: "src/data/yourdata_process_output/expression_output.txt"
+    collection: "gene_expression"
+  homolog:
+    input_path: "src/data/yourdata_process_output/homolog_output.txt"
+    collection: "homologous_genes"
+  twas:
+    input_path: "src/data/yourdata_process_output/twas_output.txt"
+    collection: "gene_trait_twas"
+  kegg:
+    input_path: "src/data/yourdata_process_output/KEGG_descriptions.txt" # 导入KEGG库
+    collection: "kegg_pathways"
+  go:
+    input_path: "src/data/yourdata_process_output/GO_descriptions.txt" # 导入GO库
+    collection: "go_terms"
+
+
+
+
+common:
+  log_path: "logs/"
+  threshold:
+    blast:
+      similarity: 0.9
+      e_value: 1e-5
+    coexpression:
+      weight: 0.9
+    twas:
+      zscore: 2.0
