@@ -1,6 +1,5 @@
 # Gene Function Prediction Project
 
-## If you are interested in the project and want to delve deeper or use it for your own projects and data, please see the instructions below
 
 ## Table of Contents
 - [Configuration](#configuration)
@@ -96,12 +95,3 @@ To run the project, follow these steps:
                 python scripts/01process_data.py
                 python scripts/02import_data.py
                 python scripts/03predict.py
-
-## If are just want to try our project with our data，here also provide a demo code for using
-
-## Usage
-To run the project, follow these steps:
-1. **Import Sample Data:**  
-        The `mongodb_data.zip` can be downloaded from Figshare at https://figshare.com/s/52e5d6b262c2331fb7bf. It contains complete MongoDB data exported using the `mongodump` tool. Importhe data into your mongoDB database
-2. **Download `run_demo` directory and run `predict.py`**
-        You need to provide your own api-key and url first in`predict.py` and exit your own mongodb database address in `prompt_generate`before running the python file
