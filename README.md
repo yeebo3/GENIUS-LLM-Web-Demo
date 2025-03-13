@@ -1,5 +1,3 @@
-# Gene Function Prediction Project
-
 
 ## Table of Contents
 - [Configuration](#configuration)
