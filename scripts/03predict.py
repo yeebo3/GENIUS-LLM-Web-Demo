@@ -34,13 +34,14 @@ logging.basicConfig(
 
 logger = logging.getLogger(__name__)
 
-def get_gene_input():
+def get_gene_input(gene_id):
     """Get the gene ID input from the user"""
-    return input("Please enter the gene ID for prediction: ")
+    print("Please enter the gene ID for prediction: ")
+    return gene_id
 
 if __name__ == "__main__":
     # Step 1: Get the gene ID input from the user
-    gene_id = get_gene_input()
+    gene_id = get_gene_input("AT1G03000")
 
     # Step 2: Create a prompt generator instance
     try:

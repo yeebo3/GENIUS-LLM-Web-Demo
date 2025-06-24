@@ -3,8 +3,6 @@ from typing import Tuple, List
 from .base_fetcher import BaseDataFetcher
 from typing import List, Dict, Any
 
-
-
 class HomologFetcher(BaseDataFetcher):
     def fetch_data(self, gene_id: str) ->  Tuple[str, List[str]]:
         """
@@ -18,18 +16,18 @@ class HomologFetcher(BaseDataFetcher):
             Returns an empty list if no data is found.
         """
         try:
-            # 获取 MongoDB 集合
+            # Get MongoDB collection
             homologous_genes_collection = self.db['homologous_genes']
             
-            # 查询 gene_id 的文档
+            # Query the document for the gene_id
             homologous_result = homologous_genes_collection.find_one({"gene_id": gene_id})
             
-            # 如果没有找到结果
+            # If no result is found
             if not homologous_result:
                 self.logger.info(f"No homologous gene data found for gene {gene_id}")
                 return []
 
-            # 构造返回的字典
+            # Construct the returned dictionary
             result_data = {
                 "gene_id": gene_id,
                 "homologous_gene": homologous_result.get("homologous_gene"),
@@ -41,7 +39,7 @@ class HomologFetcher(BaseDataFetcher):
                 "function_description": homologous_result.get("function_description", "-"),
             }
 
-            # 构造描述信息
+            # Construct the description message
             description = (
                 f"Gene '{gene_id}' has a homologous gene in Arabidopsis thaliana, "
                 f"'{result_data['homologous_gene']}' "
@@ -53,10 +51,10 @@ class HomologFetcher(BaseDataFetcher):
                 f"Function: {result_data['function_description']}."
             )
 
-            # 打印日志
+            # Log success
             self.logger.info(f"Successfully fetched homolog data for gene {gene_id}")
             
-            # 返回结果
+            # Return the result
             return [{"data": result_data, "description": description}]
 
         except Exception as e:

@@ -95,32 +95,15 @@ Based on the data for the target gene and related genes, predict the biological 
 #### **3. Potential Traits**:
 - List and describe any traits that may be influenced by gene '{gene_id}', integrating evidence from the above datasets.
 
-#### **4. Integration with External Knowledge**:
-- Perform supplementary online searches and retrieve evidence from:
-  - **PubMed literature citations**,
-  - **Protein-protein interaction networks** (e.g., STRING),
-  - **Plant-specific databases** (e.g., PlantTFDB).
-- It is mandatory to retrieve and include specific data points from online databases or literature in the output.
-- Examples of required data include:
-  1. STRING protein-protein interaction data, including interaction confidence scores and involved proteins.
-  2. PlantTFDB transcription factor annotations, highlighting regulatory roles.
 
-- For each retrieved data point:
-  - Explicitly cite the source (e.g., "STRING Interaction: interacting with stress-related proteins, confidence score: 0.82").
-  - Indicate whether the data supports or challenges local predictions.
-- Retrieve at least three specific data points related to the target gene from online resources and explicitly describe how each one contributes to the prediction.
-- For example:
-  - "STRING Interaction: interacting with stress-related proteins (confidence score: 0.82), retrieved from STRING, supports the hypothesis that the gene plays a role in abiotic stress response."
-  - "PlantTFDB Annotation: transcription factor involved in drought response, retrieved from PlantTFDB, aligns with high expression levels in drought-related tissues."
-
-#### **5. Upregulation/Downregulation Analysis**:
+#### **4. Upregulation/Downregulation Analysis**:
 - Use gene expression data to analyze whether gene '{gene_id}' is upregulated or downregulated under specific conditions.
 - Correlate observed trends with potential biological roles, e.g.:
   - **Upregulation**: Active involvement in processes like stress response or development.
   - **Downregulation**: Reduced activity or suppression in certain pathways or conditions.
 - Cross-reference local findings with external annotations (e.g., GO terms, KEGG pathways).
   
-#### **6. Step-by-Step Reasoning**:
+#### **5. Step-by-Step Reasoning**:
 - Provide a structured explanation showing how each dataset contributes to your prediction. Use logical connectors like "Firstly," "Furthermore," and "Lastly" for clarity.
 
 ---
@@ -168,7 +151,7 @@ You are tasked with predicting the biological function of the target gene '{gene
 ### **Inference Paths for Gene '{gene_id}'**:
 Follow these paths based on available data, using each source as evidence to confirm or elaborate predictions. Integrate multiple paths when they reinforce each other, and continue gathering support from all relevant data types even after forming initial predictions.
 
-- **Path 1** (Direct TWAS Association): If TWAS data shows a strong association, form a primary hypothesis. Validate with expression data to identify tissue-specific activity, focusing on whether the gene is upregulated or downregulated in relevant tissues or conditions. Use homolog data to refine these predictions.
+- **Path 1** (Direct TWAS Association): If TWAS data shows a strong association, form a primary hypothesis. Validate with expression data to identify tissue-specific activity, focusing on whether the gene is upregulated or downregulated in relevant tissues or conditions. Use homolog data to refine these predictions.Note: Information from web-searched papers should not be included in the output.
 ...
 """
 

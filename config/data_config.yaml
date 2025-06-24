@@ -1,14 +1,14 @@
 model:
   url: https://api.deepseek.com
-  api_key: <your_api_key>
+  api_key: sk- # replace your api_key
   model: deepseek-chat
 
 mongodb:
   uri: "mongodb://localhost:27017/"
-  database: "cotton_gene_database"
+  database: "arabidopsis_gene_db" # Database names for corresponding species (need to be changed)
 
-# for 01process_data.py ,文本化处理数据
-#定义了每种数据类型的输入文件和输出文件路径，用于数据处理操作
+# for 01process_data.py 
+## Defined the input and output file paths for each data type for data processing operations.
 data_paths:
   blast:
     input: "src/data/yourdata_process/01gene_blast.txt"
@@ -32,12 +32,12 @@ data_paths:
     input: "src/data/yourdata_process/07GO.csv"
     output: "src/data/yourdata_process_output/GO_descriptions.txt"
 
-# for 02import_data.py，将文本化数据导入到 MongoDB 数据库
-  # 定义了需要导入到 MongoDB 数据库的各种数据源及目标集合
-  # 目前只支持txt和CSV文件
+# for 02import_data.py
+  ## Defined the various data sources to be imported into the MongoDB database and the target collections.
+  ## Currently supports TXT and CSV files
 data_imports:
   blast:
-    input_path: "src/data/yourdata_process_output/blast_results_text.txt"  # 从文件 src/data/test_import/01gene_blast_cleaned.txt 中读取基因比对数据，导入到 MongoDB 集合
+    input_path: "src/data/yourdata_process_output/blast_results_text.txt"  # Read the gene alignment data from the file "src/data/test_import/01gene_blast_cleaned.txt" and import it into the MongoDB collection.
     collection: "gene_blast_similarity"
   coexpression:
     input_path: "src/data/yourdata_process_output/coexpression_output.txt"
@@ -52,10 +52,10 @@ data_imports:
     input_path: "src/data/yourdata_process_output/twas_output.txt"
     collection: "gene_trait_twas"
   kegg:
-    input_path: "src/data/yourdata_process_output/KEGG_descriptions.txt" # 导入KEGG库
+    input_path: "src/data/yourdata_process_output/KEGG_descriptions.txt" # Import the KEGG database
     collection: "kegg_pathways"
   go:
-    input_path: "src/data/yourdata_process_output/GO_descriptions.txt" # 导入GO库
+    input_path: "src/data/yourdata_process_output/GO_descriptions.txt" # Import the GO database
     collection: "go_terms"
 
 

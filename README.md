@@ -1,36 +1,28 @@
-
-## Table of Contents
-- [Configuration](#configuration)
-- [Logs](#logs)
-- [Scripts](#scripts)
-- [Source](#source)
-- [File Descriptions](#file-descriptions)
-- [Usage](#usage)
-
+1.  Script Overview
 ## Configuration
 `data_config.yaml` In this yaml file, customize your own API, data paths, and database addresses and other configurations.
 ## Scripts Overview
 The project is divided into four main parts:
 
-### 1. User-Facing Script
-- **01process_data.py**
-- **02import_data.py**
-- **03predict.py**: 
+### 1.1 User-Facing Script
+- 01process_data.py
+- 02import_data.py
+- 03predict.py: 
         - Users need to modify two parts before running this py in `data_config.yaml`
 
-### 2. Model Module
-- **__init__.py**: Empty file for package initialization.
-- **base_model.py**: Calls the model API to generate prediction results.
-- **llm_model.py**: Handles interactions with the OpenAI API or others for compatibility. Modify this if using a different model.
-- **model_factory.py**: Creates different model instances based on the configuration.
+### 1.2 Model Module
+- __init__.py: Empty file for package initialization.
+- base_model.py: Calls the model API to generate prediction results.
+- llm_model.py: Handles interactions with the OpenAI API or others for compatibility. Modify this if using a different model.
+- model_factory.py: Creates different model instances based on the configuration.
 
-### 3. Prompt Module
-- **__init__.py**: Empty file for package initialization.
-- **base_prompt.py**: Generates prompts for gene prediction.
-- **gene_prompt.py**: Extracts gene data from MongoDB and integrates it into comprehensive prompts.
-- **prompt_factory.py**: Creates different types of prompt generators.
+### 1.3 Prompt Module
+- __init__.py: Empty file for package initialization.
+- base_prompt.py: Generates prompts for gene prediction.
+- gene_prompt.py: Extracts gene data from MongoDB and integrates it into comprehensive prompts.
+- prompt_factory.py: Creates different types of prompt generators.
 
-### 4. Data process
+### 1.4 Data process
 We provide cotton data as examples.
 
 ## File Structure
@@ -61,35 +53,89 @@ We provide cotton data as examples.
 ```
 
 ## File Descriptions
-- **README.md**: This file.
-- **data_config.yaml**: Configuration file.
-- **01process_data.py**: Processes data.
-- **02import_data.py**: Imports data to MongoDB.
-- **03predict.py**: Calls the language model to predict genes.
-- **logs/**: Stores log files.
-- **data/**: Contains raw and processed data.
-- **fetchers/**: Fetches 7 types of data.
-- **importers/**: Imports data.
-- **model/**: Interfaces with the large model API.
-- **processors/**: Converts data into text.
-- **prompt/**: Manages prompt engineering.
+- README.md: This file.
+- data_config.yaml: Configuration file.
+- 01process_data.py: Processes data.
+- 02import_data.py: Imports data to MongoDB.
+- 03predict.py: Calls the language model to predict genes.
+- logs/: Stores log files.
+- data/: Contains raw and processed data.
+- fetchers/: Fetches 7 types of data.
+- importers/: Imports data.
+- model/: Interfaces with the large model API.
+- processors/: Converts data into text.
+- prompt/: Manages prompt engineering.
 
-## Usage
-To run the project, follow these steps:
+#############################################################################################################
+#############################################################################################################
 
-1. **Install Required Packages:**（*not list all*）
-                ```bash
-                pip install pyyaml==6.0.1 openai==0.28.0 pymongo==4.8.0
-                ```
+2. Experimental Environment:
 
-2. **Import Data:**
-                Place your data into `src/data/yourdata_process`.
-                create your mongoDB database and collection.
+2.1 MongoDB:
+db version v8.0.3
+Build Info: {
+    "version": "8.0.3",
+    "gitVersion": "89d97f2744a2b9851ddfb51bdf22f687562d9b06",
+    "modules": [],
+    "allocator": "tcmalloc-gperf",
+    "environment": {
+        "distmod": "windows",
+        "distarch": "x86_64",
+        "target_arch": "x86_64"
+    }
+}
 
-3. **Configure:**
-                Modify `data_config.yaml` to fit your requirements.
+2.2 MongoDB Database Tools: 100.12.0  
+Download link: https://www.mongodb.com/try/download/database-tools
 
-4. **Run Scripts Sequentially:**
-                python scripts/01process_data.py
-                python scripts/02import_data.py
-                python scripts/03predict.py
+2.3 Packages required for the experiment can be found in: environment.yml  
+        2.3.1 First activate your environment: conda activate your_env_name  
+        2.3.2 Update/install the required packages in your environment: conda env update -f environment.yml
+
+#############################################################################################################
+#############################################################################################################
+
+3. Gene Prediction:
+3.1 Preparing for Data Import:  
+Before you begin, please make sure that your MongoDB database is correctly installed, and the MongoDB Database Tools component is also installed (this is a prerequisite for step 2). Make sure your environment is correctly configured.  
+Then, create a folder for storing the corresponding species, and put your json and bson formatted data into the designated folder (your_db_path).
+
+For example:
+mkdir "C:\Users\HZAUjie\Desktop\GENIUS-LLM\mongo_restore_ready\cotton_gene_db"  
+C:\Users\HZAUjie\Desktop\GENIUS-LLM\mongo_restore_ready\  
+└── cotton_gene_db\  
+    └── gene_blast_similarity.bson  
+    └── gene_blast_similarity.metadata.json
+
+3.2 Use the mongorestore command to import the species database:  
+Open Windows terminal as administrator, navigate to the directory where the mongorestore command is located, and execute the following command:  
+mongorestore --db your_db "your_db_path"  
+For example: mongorestore --db cotton_gene_db "C:\Users\HZAUjie\Desktop\GENIUS-LLM\mongo_restore_ready\cotton_gene_db"
+
+3.3 Edit the configuration file:  
+The config file is located at: config/data_config.yaml  
+In the configuration file, you may need to modify the following parameters:  
+    Change api_key to your own API key (must be modified);  
+    Change database: "rice_gene_db" to the database name in mongodb for the organism you wish to predict;  
+    The data_paths section should be changed to your own raw data paths (used by 01process_data.py to process raw data into text data);  
+    The data_paths section also refers to the output file path generated by 01process_data.py (used by 02import_data.py to import the text data into MongoDB);  
+    The common section is for logging options and setting reliable threshold values for blast, coexpression, and twas.
+
+If you use the provided data, you do not need to modify the "data_paths", "data_imports", and "common" sections.
+
+3.4 Input gene ID for prediction:  
+Open 03predict.py and find:  
+# Step 1: Get the gene ID input from the user  
+    gene_id = get_gene_input("LOC_Os01g01080")  
+Replace "LOC_Os01g01080" with your target gene ID.
+
+3.5 How to Run:
+
+First run 01process_data.py,  
+Then run 02import_data.py,  
+Finally, run 03predict.py (If you are using our provided data and have imported the downloaded data into MongoDB as described in 2.1 and 2.2, you can run 03predict.py directly)
+
+#############################################################################################################
+#############################################################################################################
+
+
