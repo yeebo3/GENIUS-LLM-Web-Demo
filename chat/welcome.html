@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome - GENIUS-LLM</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(180deg, #0d0d2b 0%, #2b1d3d 100%);
+      color: white;
+    }
+
+    canvas#stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+
+    .overlay-gradient {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 30%, rgba(100, 100, 255, 0.2), transparent 60%);
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 1rem;
+    }
+
+    .title {
+      font-size: 4.8rem;
+      font-weight: bold;
+      background: linear-gradient(to right, #3ef2cc, #a26bff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 30px;
+    }
+
+    .line {
+      width: 40vw;
+      max-width: 500px;
+      height: 4px;
+      background: linear-gradient(to right, #ffadef, #78ffff);
+      margin-bottom: 60px;
+      animation: pulseLine 2s ease-in-out infinite;
+      border-radius: 2px;
+    }
+
+    @keyframes pulseLine {
+      0%, 100% {
+        transform: scaleX(0.3);
+        opacity: 0.3;
+      }
+      50% {
+        transform: scaleX(1);
+        opacity: 1;
+      }
+    }
+
+    .start-btn {
+      padding: 20px 40px;
+      font-size: 1.5rem;
+      font-weight: bold;
+      border-radius: 30px;
+      border: none;
+      background: linear-gradient(to right, #78e6ff, #e199ff);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.3);
+      transition: all 0.2s ease-in-out;
+    }
+
+    .start-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+    }
+
+    @media (max-width: 600px) {
+      .title { font-size: 2.8rem; }
+      .start-btn { font-size: 1.2rem; padding: 16px 30px; }
+      .line { width: 60vw; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="stars"></canvas>
+  <div class="overlay-gradient"></div>
+
+  <div class="content">
+    <div class="title">GENIUS-LLM</div>
+    <div class="line"></div>
+    <button class="start-btn" onclick="location.href='index.html'">Let's Start!</button>
+  </div>
+
+  <script>
+    // 星空粒子动画
+    const canvas = document.getElementById('stars');
+    const ctx = canvas.getContext('2d');
+    let w, h;
+    let stars = [];
+
+    function resizeCanvas() {
+      w = canvas.width = window.innerWidth;
+      h = canvas.height = window.innerHeight;
+    }
+
+    function createStars(count) {
+      stars = [];
+      for (let i = 0; i < count; i++) {
+        stars.push({
+          x: Math.random() * w,
+          y: Math.random() * h,
+          r: Math.random() * 1.5 + 0.5,
+          d: Math.random() * 0.5 + 0.2,
+          alpha: Math.random(),
+          delta: Math.random() * 0.02
+        });
+      }
+    }
+
+    function drawStars() {
+      ctx.clearRect(0, 0, w, h);
+      for (let i = 0; i < stars.length; i++) {
+        const s = stars[i];
+        ctx.beginPath();
+        ctx.globalAlpha = s.alpha;
+        ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+        ctx.fillStyle = '#ffffff';
+        ctx.fill();
+        s.y += s.d;
+        s.alpha += s.delta;
+        if (s.alpha >= 1 || s.alpha <= 0.1) s.delta = -s.delta;
+        if (s.y > h) {
+          s.y = 0;
+          s.x = Math.random() * w;
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function animate() {
+      drawStars();
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('resize', () => {
+      resizeCanvas();
+      createStars(150);
+    });
+
+    resizeCanvas();
+    createStars(150);
+    animate();
+  </script>
+</body>
+</html>

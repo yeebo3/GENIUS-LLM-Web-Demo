@@ -5,7 +5,7 @@ from openai import OpenAI
 from .base_model import BaseModel
 
 # Read the configuration file
-with open('config/data_config.yaml', 'r') as config_file:
+with open(r'C:\Users\zyb20\Downloads\GENIUS-LLM\config\data_config.yaml', 'r') as config_file:
     config = yaml.safe_load(config_file)
 
 class LLMModel(BaseModel):

@@ -1,0 +1,7 @@
+2025-07-06 21:53:07,882 - root - ERROR - Error processing blast data: [Errno 2] No such file or directory: 'src/data/yourdata_process/01gene_blast.txt'
+2025-07-06 21:53:07,882 - root - ERROR - Error processing coexpression data: [WinError 3] 系统找不到指定的路径。: 'src/data/yourdata_process/02cultivar'
+2025-07-06 21:53:07,884 - root - ERROR - Error processing expression data: [Errno 2] No such file or directory: 'src/data/yourdata_process/03all_Tissue_mean_TPM.csv'
+2025-07-06 21:53:07,885 - root - ERROR - Error processing homolog data: [Errno 2] No such file or directory: 'src/data/yourdata_process/04multi_gene_data.xlsx'
+2025-07-06 21:53:07,887 - root - ERROR - Error processing twas data: [Errno 2] No such file or directory: 'src/data/yourdata_process/05TWAS_out_240925.xlsx'
+2025-07-06 21:53:07,887 - root - INFO - Successfully processed kegg data
+2025-07-06 21:53:07,887 - root - INFO - Successfully processed go data

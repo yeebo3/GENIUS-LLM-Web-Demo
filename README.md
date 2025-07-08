@@ -1,4 +1,12 @@
-# GENIUS-LLM
+# GENIUS-LLM Web Demo
+
+### Project Introduction
+
+This project is modified and expanded based on the open-source project  [GENIUS-LLM](https://github.com/yimengzhiyan/GENIUS-LLM), 
+realizing a complete front-end and back-end separated Web application to facilitate users' online experience of the model functions.
+- Backend: The API interface is built using Flask, retaining the original model inference logic.
+- Frontend: A concise interactive interface has been developed, allowing users to upload inputs and view results.
+- Deployment: The backend is deployed on Render, and the frontend is deployed on Netlify, supporting public network access.
 
 ## 1. Script Overview
 
