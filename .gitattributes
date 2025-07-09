@@ -1,1 +1,2 @@
 *.txt filter=lfs diff=lfs merge=lfs -text
+C:/Users/zyb20/Downloads/GENIUS-LLM-Web-Demo/src/data/yourdata_process_output/blast_results_text.txt filter=lfs diff=lfs merge=lfs -text
