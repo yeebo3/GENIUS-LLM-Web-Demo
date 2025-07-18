@@ -11,7 +11,7 @@ from src.model.model_factory import ModelFactory  # Create model from model_fact
 from src.prompt.prompt_factory import PromptFactory  # Create prompt generator from prompt_factory
 
 # Read the configuration file
-with open(r'C:\Users\zyb20\Downloads\GENIUS-LLM\config\data_config.yaml', 'r') as config_file:
+with open(r'..\config\data_config.yaml', 'r') as config_file:
     config = yaml.safe_load(config_file)
 
 # Set up logging
