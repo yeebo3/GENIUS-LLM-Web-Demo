@@ -19,7 +19,7 @@ def setup_logging(log_path: str):
 
 def main():
     # Load configuration
-    config = load_config(r"C:\Users\zyb20\Downloads\GENIUS-LLM\config\data_config.yaml")
+    config = load_config(r"..\config\data_config.yaml")
     
     # Setup logging
     setup_logging(config['common']['log_path'])
