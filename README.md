@@ -4,9 +4,6 @@
 
 This project is modified and expanded based on the open-source project  [GENIUS-LLM](https://github.com/yimengzhiyan/GENIUS-LLM), 
 realizing a complete front-end and back-end separated Web application to facilitate users' online experience of the model functions.
-- Backend: The API interface is built using Flask, retaining the original model inference logic.
-- Frontend: A concise interactive interface has been developed, allowing users to upload inputs and view results.
-- Deployment: The backend is deployed on Render, and the frontend is deployed on Netlify, supporting public network access.
 
 ## 1. Script Overview
 
@@ -14,13 +11,13 @@ realizing a complete front-end and back-end separated Web application to facilit
 `data_config.yaml` - In this yaml file, customize your own API, data paths, and database addresses and other configurations.
 
 ### Scripts Overview
-The project is divided into four main parts:
+The project is divided into five main parts:
 
 #### 1.1 User-Facing Script
 - **01process_data.py** - Processes raw data into text format
 - **02import_data.py** - Imports processed data into MongoDB
 - **03predict.py** - Users need to modify two parts before running this py in `data_config.yaml`
-
+- **gene_predict.py** - Interface with the front-end
 #### 1.2 Model Module
 - **__init__.py** - Empty file for package initialization
 - **base_model.py** - Calls the model API to generate prediction results
@@ -36,30 +33,47 @@ The project is divided into four main parts:
 #### 1.4 Data Process
 We provide cotton data as examples.
 
+#### 1.5 Web
+- **upload.py** - If you want to use the prediction function on the web page, you must first run this file to establish a connection with the backend.
+- **welcome.html** - Welcome Screen
+- **index.html** - Chat Screen
+
 ### File Structure
 ```
-├── config
-│   └── data_config.yaml
-├── logs
-│   ├── import_data.log
-│   ├── predict.log
-│   └── process_data.log
-├── README.md
-├── scripts
-│   ├── 01process_data.py
-│   ├── 02import_data.py
-│   └── 03predict.py
-└── src
-    ├── data
-    │   ├── fetchers
-    │   ├── yourdata_process
-    │   └── yourdata_process_output
-    ├── fetchers
-    ├── importers
-    ├── model
-    ├── processors
-    ├── prompt
-    └── utils
+GENIUS-LLM-Web-Demo
+├── chat/               
+│   ├── .idea/          
+│   ├── font/           
+│   ├── logs/           
+│   ├── pic/            
+│   ├── index.html      
+│   ├── welcome.html    
+│   └── upload.py       
+├── config/
+│   └── data_config.yaml 
+├── logs/               
+│   ├── import_data.log  
+│   ├── predict.log      
+│   └── process_data.log     
+├── scripts/            
+│   ├── 01process_data.py 
+│   ├── 02import_data.py  
+│   ├── 03predict.py     
+│   └── gene_predict.py
+├── src/                
+│   ├── data/           
+│   │   ├── fetchers/      
+│   │   ├── yourdata_process/  
+│   │   └── yourdata_process_output/ 
+│   ├── fetchers/       
+│   ├── importers/      
+│   ├── model/          
+│   ├── processors/     
+│   ├── prompt/         
+│   └── utils/              
+├── environment.yml                
+├── README.md           
+└── requirements.txt    
 ```
 
 ### File Descriptions
@@ -68,6 +82,8 @@ We provide cotton data as examples.
 - **01process_data.py** - Processes data
 - **02import_data.py** - Imports data to MongoDB
 - **03predict.py** - Calls the language model to predict genes
+- **upload.py** - Connect to the backend
+- **gene_predict.py** - Connect to the front-end
 - **logs/** - Stores log files
 - **data/** - Contains raw and processed data
 - **fetchers/** - Fetches 7 types of data
@@ -164,5 +180,9 @@ Replace "LOC_Os01g01080" with your target gene ID.
 1. First run `01process_data.py`
 2. Then run `02import_data.py`
 3. Finally, run `03predict.py` 
+
+### 3.6 How to Run the Web
+1. First run `upload.py`
+2. Then run `welcome.html` or `index.html`
 
 **Note**: If you are using our provided data and have imported the downloaded data into MongoDB as described in 2.1 and 2.2, you can run `03predict.py` directly.

@@ -5,12 +5,12 @@ import logging
 import os
 import sys
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # 项目根目录
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # Project root directory
 
 from src.model.model_factory import ModelFactory
 from src.prompt.prompt_factory import PromptFactory
 
-# 配置日志
+# Configuration log
 log_dir = '../chat/logs'
 log_file = os.path.join(log_dir, 'predict.log')
 os.makedirs(log_dir, exist_ok=True)
@@ -24,7 +24,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# 加载配置
+# Load configuration
 with open('../config/data_config.yaml', 'r', encoding='utf-8') as config_file:
     config = yaml.safe_load(config_file)
 
@@ -50,7 +50,7 @@ def run_prediction(gene_id: str) -> str:
     return result
 
 
-# 保留命令行方式调用（可选）
+# Retain command-line calls (optional)
 def get_gene_input():
     return sys.argv[1] if len(sys.argv) > 1 else input("Enter gene ID: ")
 

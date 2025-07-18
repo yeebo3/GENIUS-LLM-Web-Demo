@@ -5,7 +5,7 @@ from pymongo import MongoClient
 import yaml
 
 # Read the configuration file
-with open(r'C:\Users\zyb20\Downloads\GENIUS-LLM\config\data_config.yaml', 'r') as config_file:
+with open(r'..\config\data_config.yaml', 'r') as config_file:
     config = yaml.safe_load(config_file)
 
 # Read MongoDB configuration from the config file
